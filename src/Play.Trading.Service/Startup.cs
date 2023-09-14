@@ -109,7 +109,7 @@ namespace Play.Trading.Service
             services.AddMassTransit(configure =>
             {
                 //because we add some specific configurations for Saga, so we use this instead
-                configure.UsingPlayEconomyRabbitMq(retryConfigurator =>
+                configure.UsingPlayEconomyMessageBroker(Configuration, retryConfigurator =>
                 {
                     retryConfigurator.Interval(3, TimeSpan.FromSeconds(5));
                     retryConfigurator.Ignore<UnknownItemException>();

@@ -1,7 +1,7 @@
 
 ## Build the Docker image
 ```powershell
-$version="1.0.1"
+$version="1.0.2"
 $env:GH_OWNER="samphamdotnetmicroservices02"
 $env:GH_PAT="[PAT HERE]"
 docker build --secret id=GH_OWNER --secret id=GH_PAT -t play.trading:$version .
@@ -14,8 +14,8 @@ is just going to be ".", this "." represents the current directory
 ```
 
 ```mac
-version="1.0.1"
-export GH_OWNER="samphamdotnetmicroservices02" 
+version="1.0.2"
+export GH_OWNER="samphamdotnetmicroservices02"
 export GH_PAT="[PAT HERE]"
 docker build --secret id=GH_OWNER --secret id=GH_PAT -t play.trading:$version .
 check this link for more details about env variable on mac
@@ -29,7 +29,14 @@ docker images
 
 ## Run the docker image
 ```powershell
+$cosmosDbConnString="[CONN STRING HERE]"
+$serviceBusConnString="[CONN STRING HERE]"
+
 docker run -it --rm -p 5006:5006 --name trading -e MongoDbSettings__Host=mongo -e RabbitMqSettings__Host=rabbitmq --network playinfra_default play.trading:$version
+
+if you do not use MongoDb and RabbitMQ from Play.Infra, you can remove --network playinfra_default
+
+docker run -it --rm -p 5006:5006 --name trading -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e ServiceBusSetting__ConnectionString=$serviceBusConnString -e ServiceSettings__MessageBroker="SERVICEBUS" play.trading:$version
 
 -it: what it does is it creates and kind of an interactive shell, so that you will not able to go back to your
 command line until you cancel the execution of these docker run command.
@@ -59,5 +66,13 @@ And lastly we have to specify the docker image that we want to run (play.trading
 ```
 
 ```mac
+cosmosDbConnString="[CONN STRING HERE]"
+serviceBusConnString="[CONN STRING HERE]"
+
 docker run -it --rm -p 5006:5006 --name trading -e MongoDbSettings__Host=mongo -e RabbitMqSettings__Host=rabbitmq --network playinfra_default play.trading:$version
+
+if you do not use MongoDb and RabbitMQ from Play.Infra, you can remove --network playinfra_default
+
+docker run -it --rm -p 5006:5006 --name trading -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e ServiceBusSetting__ConnectionString=$serviceBusConnString -e ServiceSettings__MessageBroker="SERVICEBUS" play.trading:$version
+
 ```
