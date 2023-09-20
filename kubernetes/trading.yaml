@@ -1,0 +1,11 @@
+#Kubernetes servicea account
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  # name is the name of service account
+  name: trading-serviceaccount
+  annotations:
+    #client-id is the value comes from "$IDENTITY_CLIENT_ID=az identity show -g $appname -n $namespace --query clientId -otsv" in README file
+    azure.workload.identity/client-id: 4d31801c-9798-48ed-b329-7e8c44401e92
+  labels:
+    azure.workload.identity/use: "true"
