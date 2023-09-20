@@ -1,7 +1,7 @@
 
 ## Build the Docker image
 ```powershell
-$version="1.0.2"
+$version="1.0.3"
 $env:GH_OWNER="samphamdotnetmicroservices02"
 $env:GH_PAT="[PAT HERE]"
 $acrName="samphamplayeconomyacr"
@@ -20,7 +20,7 @@ is just going to be ".", this "." represents the current directory
 ```
 
 ```mac
-version="1.0.2"
+version="1.0.3"
 export GH_OWNER="samphamdotnetmicroservices02"
 export GH_PAT="[PAT HERE]"
 docker build --secret id=GH_OWNER --secret id=GH_PAT -t play.trading:$version .
