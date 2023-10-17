@@ -272,6 +272,7 @@ helm upgrade trading-service ./helm -f ./helm/values.yaml -n $namespace --instal
 
 helm list -n $namespace
 helm repo update
+helm delete trading-service -n $namespace
 ```
 - helm install indentity-service: "identity-service" is the name you want, this is the name of your release
 - ./helm: the location where you have your chart, which is your helm directory
@@ -311,8 +312,8 @@ or
 helm upgrade trading-service ./helm -f ./helm/values.yaml -n $namespace --install
 
 helm list -n $namespace
-helm delete <release-name> -n $namespace
 helm repo update
+helm delete trading-service -n $namespace
 ```
 
 ## Rollback the previous version using helm
