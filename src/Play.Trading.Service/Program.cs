@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -24,5 +25,9 @@ namespace Play.Trading.Service
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+        // .ConfigureLogging(builder => builder.AddJsonConsole(options =>
+        // {
+        //     options.JsonWriterOptions = new JsonWriterOptions { Indented = true };
+        // }));
     }
 }
