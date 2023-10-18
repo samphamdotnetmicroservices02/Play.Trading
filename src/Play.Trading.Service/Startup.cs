@@ -74,7 +74,7 @@ namespace Play.Trading.Service
 
             services.AddSeqLogging(Configuration);
 
-            services.AddOpenTelemetryTracing(builder => 
+            services.AddOpenTelemetryTracing(builder =>
             {
                 var serviceSettings = Configuration.GetSection(nameof(ServiceSettings)).Get<ServiceSettings>();
 
@@ -100,9 +100,18 @@ namespace Play.Trading.Service
 
                 // this allows us to track any inbound request into our controllers right into our microservice via APIs.
                 .AddAspNetCoreInstrumentation()
-                
+
                 //where we want to export this tracing information. so that we're going to be using the console exporter right now.
-                .AddConsoleExporter();
+                .AddConsoleExporter()
+
+                //For Jaeger
+                .AddJaegerExporter(options =>
+                {
+                    var jaegerSettings = Configuration.GetSection(nameof(JaegerSettings)).Get<JaegerSettings>();
+
+                    options.AgentHost = jaegerSettings.Host;
+                    options.AgentPort = jaegerSettings.Port;
+                });
             });
         }
 
@@ -168,7 +177,7 @@ namespace Play.Trading.Service
                     //x.UseInMemoryOutbox().(configurator => configurator.UseInMemoryOutbox());
                     sagaConfigurator.UseInMemoryOutbox();
                 })
-                
+
                     .MongoDbRepository(r =>
                     {
                         var serviceSettings = Configuration.GetSection(nameof(ServiceSettings)).Get<ServiceSettings>();
