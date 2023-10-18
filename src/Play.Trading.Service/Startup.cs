@@ -1,7 +1,6 @@
 using System;
 using System.Reflection;
 using System.Text.Json.Serialization;
-using GreenPipes;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
