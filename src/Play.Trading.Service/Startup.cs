@@ -124,7 +124,7 @@ namespace Play.Trading.Service
                     retryConfigurator.Ignore<UnknownItemException>();
                 });
                 configure.AddConsumers(Assembly.GetEntryAssembly());
-                configure.AddSagaStateMachine<PurchaseStateMachine, PurchaseState>(sagaConfigurator =>
+                configure.AddSagaStateMachine<PurchaseStateMachine, PurchaseState>((x, sagaConfigurator) =>
                 {
                     /*
                     * Because we send message to consumer before persisting Accepted into database, and then the consumer send back and now we are 
@@ -132,8 +132,10 @@ namespace Play.Trading.Service
                     * anything when we receive the message back. By configure .UseInMemoryOutbox(), we can solve that problem. It means no message
                     * will be sent from one of the saga pipelines until we persist its state into database.
                     */
+                    //x.UseInMemoryOutbox().(configurator => configurator.UseInMemoryOutbox());
                     sagaConfigurator.UseInMemoryOutbox();
                 })
+                
                     .MongoDbRepository(r =>
                     {
                         var serviceSettings = Configuration.GetSection(nameof(ServiceSettings)).Get<ServiceSettings>();
@@ -149,10 +151,6 @@ namespace Play.Trading.Service
             EndpointConvention.Map<GrantItems>(new Uri(queueSettings.GrantItemsQueueAddress));
             EndpointConvention.Map<DebitGil>(new Uri(queueSettings.DebitGilQueueAddress));
             EndpointConvention.Map<SubtractItems>(new Uri(queueSettings.SubtractItemsQueueAddress));
-
-            services.AddMassTransitHostedService();
-
-            services.AddGenericRequestClient();
         }
     }
 }

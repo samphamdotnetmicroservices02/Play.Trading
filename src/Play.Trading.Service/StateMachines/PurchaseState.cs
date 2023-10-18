@@ -4,12 +4,9 @@
 */
 
 using System;
-using Automatonymous;
-using MassTransit.Saga;
+using MassTransit;
 
 namespace Play.Trading.Service.StateMachines;
-
-
 
 /*
 * we need to implement this interface (SagaStateMachineInstance) because each of these sagas are going to actually
