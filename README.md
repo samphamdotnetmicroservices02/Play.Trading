@@ -1,7 +1,7 @@
 
 ## Build the Docker image
 ```powershell
-$version="1.0.12"
+$version="1.0.19"
 $env:GH_OWNER="samphamdotnetmicroservices02"
 $env:GH_PAT="[PAT HERE]"
 $acrName="samphamplayeconomyacr"
@@ -20,7 +20,7 @@ is just going to be ".", this "." represents the current directory
 ```
 
 ```zsh
-version="1.0.12"
+version="1.0.19"
 export GH_OWNER="samphamdotnetmicroservices02"
 export GH_PAT="[PAT HERE]"
 docker build --secret id=GH_OWNER --secret id=GH_PAT -t play.trading:$version .
@@ -261,7 +261,7 @@ kubectl get all -n $namespace (verify you delete all resources)
 $acrName="samphamplayeconomyacr"
 $helmUser=[guid]::Empty.Guid (or helmUser=00000000-0000-0000-0000-000000000000)
 $helmPassword=az acr login --name $acrName --expose-token --output tsv --query accessToken
-$chartVersion="0.1.1"
+$chartVersion="0.1.2"
 
 helm registry login "$acrName.azurecr.io" --username $helmUser --password $helmPassword (login to ACR)
 
@@ -302,7 +302,7 @@ version of your helm chart inside helm/microservice
 acrName="samphamplayeconomyacr"
 helmUser=00000000-0000-0000-0000-000000000000
 export helmPassword="$(az acr login --name $acrName --expose-token --output tsv --query accessToken)"
-chartVersion="0.1.1"
+chartVersion="0.1.2"
 
 helm registry login "$acrName.azurecr.io" --username $helmUser --password $helmPassword (login to ACR)
 
